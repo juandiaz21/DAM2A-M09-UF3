@@ -5,8 +5,8 @@ public class Client {
     private static final int PORT = 7777;
     private static final String HOST = "localhost";
     private Socket socket;
-    private PrintWriter out;
-    private BufferedReader lector;
+    private static PrintWriter out;
+    private static BufferedReader lector;
 
     public void connecta() throws IOException {
         socket = new Socket(HOST, PORT);
@@ -15,26 +15,9 @@ public class Client {
         lector = new BufferedReader(new InputStreamReader(System.in));
     }
 
-    public void enviaMissatges() throws IOException {
-        String missatge;
-
-        //pruebas de que funcione como en el ejemplo
-        missatge = "Prova d'enviament 1";
+    public void envia(String missatge) throws IOException {
         out.println(missatge);
         System.out.println("Enviat al servidor: " + missatge);
-        
-        missatge = "Prova d'enviament 2";
-        out.println(missatge);
-        System.out.println("Enviat al servidor: " + missatge);
-        
-        //bucle hasta que sea null
-        while (missatge != null && !missatge.isEmpty()) {
-            System.out.println("Prem enter per tancar el servidor...");
-            missatge = lector.readLine();
-            out.println(missatge);
-            System.out.println("Enviat al servidor: " + missatge);
-            missatge = lector.readLine();
-        }
     }
 
     public void tanca() {
@@ -51,7 +34,22 @@ public class Client {
     public static void main(String[] args) throws IOException {
         Client client = new Client();
         client.connecta();
-        client.enviaMissatges();
+        String missatge;
+
+        missatge = "Prova d'enviament 1";
+        client.envia(missatge);
+
+        missatge = "Prova d'enviament 2";
+
+        System.out.println("Prem enter per tancar el servidor...");
+        missatge = lector.readLine();
+
+        while (missatge != null && !missatge.isEmpty()) {
+            client.envia(missatge);
+            System.out.println("Prem enter per tancar el servidor...");
+            missatge = lector.readLine();
+        }
+
         client.tanca();
     }
 }
