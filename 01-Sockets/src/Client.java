@@ -40,6 +40,7 @@ public class Client {
         client.envia(missatge);
 
         missatge = "Prova d'enviament 2";
+        client.envia(missatge);
 
         System.out.println("Prem enter per tancar el servidor...");
         missatge = lector.readLine();
