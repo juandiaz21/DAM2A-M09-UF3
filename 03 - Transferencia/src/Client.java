@@ -3,7 +3,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
-    public static final String DIR_ARRIBADA = "C:/Temp";
+    public static final String DIR_ARRIBADA = "C:/tmp"; 
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
@@ -43,7 +43,9 @@ public class Client {
                 byte[] contingut = (byte[]) in.readObject();
 
                 if (contingut != null) {
-                    File desti = new File(DIR_ARRIBADA, new File(nomFitxer).getName());
+                    String nomArxiu = new File(nomFitxer).getName();
+                    File desti = new File(DIR_ARRIBADA, nomArxiu);
+
                     try (FileOutputStream fos = new FileOutputStream(desti)) {
                         fos.write(contingut);
                         System.out.println("Fitxer rebut i guardat com: " + desti.getAbsolutePath());
